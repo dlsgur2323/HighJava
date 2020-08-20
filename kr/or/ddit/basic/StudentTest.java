@@ -3,6 +3,7 @@ package kr.or.ddit.basic;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /*
  * 문제) 학번, 이름, 국어점수, 영어점수, 수학점수, 총점, 등수를 멤버로 갖는 Student 클래스를 만든다.
@@ -17,8 +18,22 @@ import java.util.Comparator;
  * 		(등수는 List에 전체 데이터가 추가된 후에 저장되도록 한다.)
  */
 
+
+
 public class StudentTest {
 
+	public static void setRank(List<Student> students){
+		for(int i = 0; i < students.size(); i++){
+			int rank = 1;
+			for(int j = 0; j < students.size(); j++){
+				if(students.get(i).getSum() < students.get(j).getSum()){
+					rank ++;
+				}
+			}
+			students.get(i).setRank(rank);
+		}
+	}
+	
 	public static void main(String[] args) {
 		ArrayList<Student> students = new ArrayList<>();
 		students.add(new Student("05", "성춘향", (int)(Math.random()*100)+1, (int)(Math.random()*100)+1, (int)(Math.random()*100)+1));
@@ -29,16 +44,7 @@ public class StudentTest {
 		students.add(new Student("02", "변학도", (int)(Math.random()*100)+1, (int)(Math.random()*100)+1, (int)(Math.random()*100)+1));
 		students.add(new Student("06", "강감찬", (int)(Math.random()*100)+1, (int)(Math.random()*100)+1, (int)(Math.random()*100)+1));
 		
-		Collections.sort(students, new SumDesc());
-		for(int i = 0; i < students.size(); i++){
-			int count = 1;
-			for(int j = 0; j < students.size(); j++){
-				if(students.get(i).getSum() < students.get(j).getSum()){
-					count ++;
-				}
-			}
-			students.get(i).setRank(count);
-		}
+		setRank(students);
 		
 		Collections.shuffle(students);
 		System.out.println("정렬 전");
@@ -46,13 +52,12 @@ public class StudentTest {
 			System.out.println(student);
 		}
 		
-		
 		System.out.println("학번으로 정렬");
 		Collections.sort(students);
 		for(Student student : students){
 			System.out.println(student);
 		}
-		
+	
 		System.out.println("총점으로 정렬");
 		Collections.sort(students, new SumDesc());
 		for(Student student : students){
