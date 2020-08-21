@@ -10,7 +10,7 @@ public class ArrayListTest04 {
 		Scanner sc = new Scanner(System.in);
 		
 		for(int i = 0; i < 5; i++){
-			System.out.println("º°¸íÀ» ÀÔ·ÂÇÏ¼¼¿ä >");
+			System.out.println("ë³„ëª…ì„ ìž…ë ¥í•˜ì„¸ìš” >");
 			nameList.add(sc.nextLine());
 		}
 		int max = 0;
@@ -21,7 +21,7 @@ public class ArrayListTest04 {
 		}
 		for(int i = 0; i < nameList.size(); i++){
 			if(nameList.get(i).length() == nameList.get(max).length())
-				System.out.println("Á¦ÀÏ ±ä º°¸í : " + nameList.get(i));
+				System.out.println("ì œì¼ ê¸´ ë³„ëª… : " + nameList.get(i));
 		}
 
 	}

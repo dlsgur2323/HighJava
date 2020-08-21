@@ -17,32 +17,31 @@ public class Lotto {
 		while(true){
 			System.out.println("\n\n");
 			System.out.println("===================");
-			System.out.println("   Lotto ÇÁ·Î±×·¥");
+			System.out.println("   Lotto í”„ë¡œê·¸ë¨");
 			System.out.println("-------------------");
-			System.out.println("   1. Lotto ±¸ÀÔ");
-			System.out.println("   2. ÇÁ·Î±×·¥ Á¾·á");
+			System.out.println("   1. Lotto êµ¬ì…");
+			System.out.println("   2. í”„ë¡œê·¸ë¨ ì¢…ë£Œ");
 			System.out.println("===================");
-			System.out.println("¸Ş´º¼±ÅÃ : 1");
-			System.out.print("ÀÔ·Â >");
+			System.out.print("ì…ë ¥ >");
 			String input = sc.nextLine();
 			if(input.equals("2")){
 				System.out.println("\n\n");
-				System.out.println("°¨»çÇÕ´Ï´Ù.");
+				System.out.println("ê°ì‚¬í•©ë‹ˆë‹¤.");
 				System.exit(0);
 			} else if(input.equals("1")){
 				System.out.println("\n\n");
-				System.out.println("1000¿ø¿¡ ·Î¶Ç¹øÈ£ ÇÏ³ª ÀÔ´Ï´Ù. (ÃÖ´ë 100Àå ±¸ÀÔ °¡´É)");
-				System.out.print("±İ¾× ÀÔ·Â >");
+				System.out.println("1000ì›ì— ë¡œë˜ë²ˆí˜¸ í•˜ë‚˜ ì…ë‹ˆë‹¤. (ìµœëŒ€ 100ì¥ êµ¬ì… ê°€ëŠ¥)");
+				System.out.print("ê¸ˆì•¡ ì…ë ¥ >");
 				int input2 = Integer.parseInt(sc.nextLine());
 				if(input2 > 100000){
 					System.out.println("\n\n");
-					System.out.println("ÀÔ·Â ±İ¾×ÀÌ ³Ê¹« ¸¹½À´Ï´Ù. ·Î¶Ç¹øÈ£ ±¸ÀÔ ½ÇÆĞ!!!");
+					System.out.println("ì…ë ¥ ê¸ˆì•¡ì´ ë„ˆë¬´ ë§ìŠµë‹ˆë‹¤. ë¡œë˜ë²ˆí˜¸ êµ¬ì… ì‹¤íŒ¨!!!");
 				} else if (input2 < 1000){
 					System.out.println("\n\n");
-					System.out.println("ÀÔ·Â ±İ¾×ÀÌ ³Ê¹« Àû½À´Ï´Ù. ·Î¶Ç¹øÈ£ ±¸ÀÔ ½ÇÆĞ!!!");
+					System.out.println("ì…ë ¥ ê¸ˆì•¡ì´ ë„ˆë¬´ ì ìŠµë‹ˆë‹¤. ë¡œë˜ë²ˆí˜¸ êµ¬ì… ì‹¤íŒ¨!!!");
 				} else {
 					System.out.println("\n\n");
-					System.out.println("Çà¿îÀÇ ·Î¶Ç¹øÈ£´Â ¾Æ·¡¿Í °°½À´Ï´Ù.");
+					System.out.println("í–‰ìš´ì˜ ë¡œë˜ë²ˆí˜¸ëŠ” ì•„ë˜ì™€ ê°™ìŠµë‹ˆë‹¤.");
 					for(int i = 1; i <= input2/1000; i++){
 						Set<Integer> number = new HashSet<>();
 						while(number.size()<6){
@@ -50,10 +49,10 @@ public class Lotto {
 						}
 						ArrayList<Integer> numbers = new ArrayList<>(number);
 						Collections.sort(numbers);
-						System.out.println("·Î¶Ç¹øÈ£" + i + " : " + numbers);
+						System.out.println("ë¡œë˜ë²ˆí˜¸" + i + " : " + numbers);
 					}
 					System.out.println("\n\n");
-					System.out.println("¹ŞÀº ±İ¾×Àº " + input2 + "¿øÀÌ°í °Å½º¸§µ·Àº " + input2%1000 + "¿øÀÔ´Ï´Ù.");
+					System.out.println("ë°›ì€ ê¸ˆì•¡ì€ " + input2 + "ì›ì´ê³  ê±°ìŠ¤ë¦„ëˆì€ " + input2%1000 + "ì›ì…ë‹ˆë‹¤.");
 				}
 			}
 		}

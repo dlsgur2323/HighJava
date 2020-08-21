@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /*
- * ¹®Á¦1) 5¸íÀÇ º°¸íÀ» ÀÔ·Â¹Ş¾Æ ArrayList¿¡ ÀúÀåÇÑ ÈÄ
- * 		ÀÌµé Áß º°¸íÀÇ ±æÀÌ°¡ Á¦ÀÏ ±ä º°¸íÀ» Ãâ·ÂÇÏ½Ã¿À.
- * 			(´Ü, ÀÔ·ÂÇÑ °¢°¢ÀÇ º°¸íÀÇ ±æÀÌ´Â ¸ğµÎ ´Ù¸£´Ù.)
+ * ë¬¸ì œ1) 5ëª…ì˜ ë³„ëª…ì„ ì…ë ¥ë°›ì•„ ArrayListì— ì €ì¥í•œ í›„
+ * 		ì´ë“¤ ì¤‘ ë³„ëª…ì˜ ê¸¸ì´ê°€ ì œì¼ ê¸´ ë³„ëª…ì„ ì¶œë ¥í•˜ì‹œì˜¤.
+ * 			(ë‹¨, ì…ë ¥í•œ ê°ê°ì˜ ë³„ëª…ì˜ ê¸¸ì´ëŠ” ëª¨ë‘ ë‹¤ë¥´ë‹¤.)
  * 
- * ¹®Á¦2) ¹®Á¦1¿¡¼­ º°¸íÀÇ ±æÀÌ°¡ °°Àº °ÍÀÌ Áßº¹µÉ °æ¿ì¸¦ Ã³¸®ÇÏ½Ã¿À.
+ * ë¬¸ì œ2) ë¬¸ì œ1ì—ì„œ ë³„ëª…ì˜ ê¸¸ì´ê°€ ê°™ì€ ê²ƒì´ ì¤‘ë³µë  ê²½ìš°ë¥¼ ì²˜ë¦¬í•˜ì‹œì˜¤.
  */
 
 
@@ -20,7 +20,7 @@ public class ArrayListTest03 {
 		Scanner sc = new Scanner(System.in);
 		
 		for(int i = 0; i < 5; i++){
-			System.out.println("º°¸íÀ» ÀÔ·ÂÇÏ¼¼¿ä >");
+			System.out.println("ë³„ëª…ì„ ì…ë ¥í•˜ì„¸ìš” >");
 			nameList.add(sc.nextLine());
 		}
 		int max = 0;
@@ -29,7 +29,7 @@ public class ArrayListTest03 {
 				max = i;
 			}
 		}
-		System.out.println("Á¦ÀÏ ±ä º°¸í : " + nameList.get(max));
+		System.out.println("ì œì¼ ê¸´ ë³„ëª… : " + nameList.get(max));
 		
 	}
 

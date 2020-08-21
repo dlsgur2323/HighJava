@@ -7,9 +7,9 @@ import java.util.regex.Pattern;
 
 public class ArrayListTest02 {
 	/*
-	 * ¹®Á¦) 5¸íÀÇ »ç¶÷ ÀÌ¸§À» ÀÔ·Â¹Ş¾Æ ArrayList¿¡ ÀúÀåÇÑ ÈÄ¿¡
-	 * 		ÀÌµé Áß '±è'¾¾ ¼ºÀÇ ÀÌ¸§À» ¸ğµÎ Ãâ·ÂÇÏ½Ã¿À.
-	 * 		(´Ü, ÀÔ·ÂÀº scanner°´Ã¼¸¦ ÀÌ¿ëÇÑ´Ù.)
+	 * ë¬¸ì œ) 5ëª…ì˜ ì‚¬ëŒ ì´ë¦„ì„ ì…ë ¥ë°›ì•„ ArrayListì— ì €ì¥í•œ í›„ì—
+	 * 		ì´ë“¤ ì¤‘ 'ê¹€'ì”¨ ì„±ì˜ ì´ë¦„ì„ ëª¨ë‘ ì¶œë ¥í•˜ì‹œì˜¤.
+	 * 		(ë‹¨, ì…ë ¥ì€ scannerê°ì²´ë¥¼ ì´ìš©í•œë‹¤.)
 	 */
 	
 	
@@ -19,29 +19,29 @@ public class ArrayListTest02 {
 		Scanner sc = new Scanner(System.in);
 		
 		for(int i = 0; i < 5; i++){
-			System.out.println("ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä.");
+			System.out.println("ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”.");
 			nameList.add(sc.nextLine());
 		}
 		
-		System.out.println("±è¾¾ ¼ºÀ» °¡Áø ÀÌ¸§");
+		System.out.println("ê¹€ì”¨ ì„±ì„ ê°€ì§„ ì´ë¦„");
 
-//		charAtÀ» ÀÌ¿ë ( substring µµ °¡´É) (indexOf("±è") == 0 À¸·Îµµ °¡´É) (startWith("±è") À¸·Î Ã¹ ±ÛÂ¥ ºñ±³ °¡´É)
+//		charAtì„ ì´ìš© ( substring ë„ ê°€ëŠ¥) (indexOf("ê¹€") == 0 ìœ¼ë¡œë„ ê°€ëŠ¥) (startWith("ê¹€") ìœ¼ë¡œ ì²« ê¸€ì§œ ë¹„êµ ê°€ëŠ¥)
 		for(String name : nameList){
-			if(name.charAt(0) == '±è'){
+			if(name.charAt(0) == 'ê¹€'){
 				System.out.println(name);
 			}
 		}
 		
-		// startWith("±è")
+		// startWith("ê¹€")
 		for(String name : nameList){
-			if(name.startsWith("±è")){
+			if(name.startsWith("ê¹€")){
 				System.out.println(name);
 			}
 		}
 		
 		
-//		Á¤±ÔÇ¥Çö½Ä ÀÌ¿ë
-		String regex = "^±è.*";
+//		ì •ê·œí‘œí˜„ì‹ ì´ìš©
+		String regex = "^ê¹€.*";
 		Pattern p = Pattern.compile(regex);
 		
 		for(String name : nameList){

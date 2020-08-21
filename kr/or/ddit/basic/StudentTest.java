@@ -6,16 +6,16 @@ import java.util.Comparator;
 import java.util.List;
 
 /*
- * ¹®Á¦) ÇĞ¹ø, ÀÌ¸§, ±¹¾îÁ¡¼ö, ¿µ¾îÁ¡¼ö, ¼öÇĞÁ¡¼ö, ÃÑÁ¡, µî¼ö¸¦ ¸â¹ö·Î °®´Â Student Å¬·¡½º¸¦ ¸¸µç´Ù.
- * 		ÀÌ Å¬·¡½ºÀÇ »ı¼ºÀÚ¿¡¼­´Â ÇĞ¹ø, ÀÌ¸§, ±¹¾îÁ¡¼ö, ¿µ¾îÁ¡¼ö, ¼öÇĞÁ¡¼ö¸¸ ¸Å°³º¯¼ö·Î ¹Ş¾Æ¼­ ÃÊ±âÈ­ Ã³¸®¸¦ ÇÑ´Ù.
+ * ë¬¸ì œ) í•™ë²ˆ, ì´ë¦„, êµ­ì–´ì ìˆ˜, ì˜ì–´ì ìˆ˜, ìˆ˜í•™ì ìˆ˜, ì´ì , ë“±ìˆ˜ë¥¼ ë©¤ë²„ë¡œ ê°–ëŠ” Student í´ë˜ìŠ¤ë¥¼ ë§Œë“ ë‹¤.
+ * 		ì´ í´ë˜ìŠ¤ì˜ ìƒì„±ìì—ì„œëŠ” í•™ë²ˆ, ì´ë¦„, êµ­ì–´ì ìˆ˜, ì˜ì–´ì ìˆ˜, ìˆ˜í•™ì ìˆ˜ë§Œ ë§¤ê°œë³€ìˆ˜ë¡œ ë°›ì•„ì„œ ì´ˆê¸°í™” ì²˜ë¦¬ë¥¼ í•œë‹¤.
  * 
- * 		ÀÌ Student°´Ã¼´Â List¿¡ ÀúÀåÇÏ¿© °ü¸®ÇÑ´Ù.
+ * 		ì´ Studentê°ì²´ëŠ” Listì— ì €ì¥í•˜ì—¬ ê´€ë¦¬í•œë‹¤.
  * 		
- * 		List¿¡ ÀúÀåµÈ µ¥ÀÌÅÍµéÀ» ÇĞ¹øÀÇ ¿À¸§Â÷¼ø Á¤·ÄÀÌ µÉ ¼ö ÀÖ´Â ³»ºÎ Á¤·Ä±âÁØÀ» ±¸ÇöÇÏ°í,
- * 		ÃÑÁ¡ÀÇ ¿ª¼øÀ¸·Î Á¤·ÄÇÏ´Âµ¥ ÃÑÁ¡ÀÌ °°À¸¸é ÀÌ¸§ÀÇ ¿À¸§Â÷¼øÀ¸·Î Á¤·ÄÀÌ µÇ´Â ¿ÜºÎ Á¤·Ä ±âÁØ Å¬·¡½º¸¦ ÀÛ¼ºÇÏ¿©
- * 		Á¤·ÄµÈ °á°ú¸¦ Ãâ·ÂÇÏ½Ã¿À.
+ * 		Listì— ì €ì¥ëœ ë°ì´í„°ë“¤ì„ í•™ë²ˆì˜ ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬ì´ ë  ìˆ˜ ìˆëŠ” ë‚´ë¶€ ì •ë ¬ê¸°ì¤€ì„ êµ¬í˜„í•˜ê³ ,
+ * 		ì´ì ì˜ ì—­ìˆœìœ¼ë¡œ ì •ë ¬í•˜ëŠ”ë° ì´ì ì´ ê°™ìœ¼ë©´ ì´ë¦„ì˜ ì˜¤ë¦„ì°¨ìˆœìœ¼ë¡œ ì •ë ¬ì´ ë˜ëŠ” ì™¸ë¶€ ì •ë ¬ ê¸°ì¤€ í´ë˜ìŠ¤ë¥¼ ì‘ì„±í•˜ì—¬
+ * 		ì •ë ¬ëœ ê²°ê³¼ë¥¼ ì¶œë ¥í•˜ì‹œì˜¤.
  * 
- * 		(µî¼ö´Â List¿¡ ÀüÃ¼ µ¥ÀÌÅÍ°¡ Ãß°¡µÈ ÈÄ¿¡ ÀúÀåµÇµµ·Ï ÇÑ´Ù.)
+ * 		(ë“±ìˆ˜ëŠ” Listì— ì „ì²´ ë°ì´í„°ê°€ ì¶”ê°€ëœ í›„ì— ì €ì¥ë˜ë„ë¡ í•œë‹¤.)
  */
 
 
@@ -36,29 +36,29 @@ public class StudentTest {
 	
 	public static void main(String[] args) {
 		ArrayList<Student> students = new ArrayList<>();
-		students.add(new Student("05", "¼ºÃáÇâ", (int)(Math.random()*100)+1, (int)(Math.random()*100)+1, (int)(Math.random()*100)+1));
-		students.add(new Student("04", "È«±æµ¿", (int)(Math.random()*100)+1, (int)(Math.random()*100)+1, (int)(Math.random()*100)+1));
-		students.add(new Student("00", "ÀÏÁö¸Å", (int)(Math.random()*100)+1, (int)(Math.random()*100)+1, (int)(Math.random()*100)+1));
-		students.add(new Student("01", "±è»ñ°«", (int)(Math.random()*100)+1, (int)(Math.random()*100)+1, (int)(Math.random()*100)+1));
-		students.add(new Student("03", "ÀÌ¼ø½Å", (int)(Math.random()*100)+1, (int)(Math.random()*100)+1, (int)(Math.random()*100)+1));
-		students.add(new Student("02", "º¯ÇĞµµ", (int)(Math.random()*100)+1, (int)(Math.random()*100)+1, (int)(Math.random()*100)+1));
-		students.add(new Student("06", "°­°¨Âù", (int)(Math.random()*100)+1, (int)(Math.random()*100)+1, (int)(Math.random()*100)+1));
+		students.add(new Student("05", "ì„±ì¶˜í–¥", (int)(Math.random()*100)+1, (int)(Math.random()*100)+1, (int)(Math.random()*100)+1));
+		students.add(new Student("04", "í™ê¸¸ë™", (int)(Math.random()*100)+1, (int)(Math.random()*100)+1, (int)(Math.random()*100)+1));
+		students.add(new Student("00", "ì¼ì§€ë§¤", (int)(Math.random()*100)+1, (int)(Math.random()*100)+1, (int)(Math.random()*100)+1));
+		students.add(new Student("01", "ê¹€ì‚¿ê°“", (int)(Math.random()*100)+1, (int)(Math.random()*100)+1, (int)(Math.random()*100)+1));
+		students.add(new Student("03", "ì´ìˆœì‹ ", (int)(Math.random()*100)+1, (int)(Math.random()*100)+1, (int)(Math.random()*100)+1));
+		students.add(new Student("02", "ë³€í•™ë„", (int)(Math.random()*100)+1, (int)(Math.random()*100)+1, (int)(Math.random()*100)+1));
+		students.add(new Student("06", "ê°•ê°ì°¬", (int)(Math.random()*100)+1, (int)(Math.random()*100)+1, (int)(Math.random()*100)+1));
 		
 		setRank(students);
 		
 		Collections.shuffle(students);
-		System.out.println("Á¤·Ä Àü");
+		System.out.println("ì •ë ¬ ì „");
 		for(Student student : students){
 			System.out.println(student);
 		}
 		
-		System.out.println("ÇĞ¹øÀ¸·Î Á¤·Ä");
+		System.out.println("í•™ë²ˆìœ¼ë¡œ ì •ë ¬");
 		Collections.sort(students);
 		for(Student student : students){
 			System.out.println(student);
 		}
 	
-		System.out.println("ÃÑÁ¡À¸·Î Á¤·Ä");
+		System.out.println("ì´ì ìœ¼ë¡œ ì •ë ¬");
 		Collections.sort(students, new SumDesc());
 		for(Student student : students){
 			System.out.println(student);
@@ -157,7 +157,7 @@ class Student implements Comparable<Student>{
 
 
 
-// 	ÇĞ¹øÀ¸·Î ¿À¸§Â÷¼ø Á¤·Ä
+// 	í•™ë²ˆìœ¼ë¡œ ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬
 	@Override
 	public int compareTo(Student student) {
 		

@@ -8,33 +8,33 @@ public class EqualsHashCodeTest {
 	public static void main(String[] args) {
 		Person p1 = new Person();
 		p1.setId(1);
-		p1.setName("È«±æµ¿");
+		p1.setName("í™ê¸¸ë™");
 		
 		Person p2 = new Person();
 		p2.setId(1);
-		p2.setName("È«±æµ¿");
+		p2.setName("í™ê¸¸ë™");
 		
 		
-		System.out.println(p1 == p2); // ==Àº ÇØ´ç º¯¼öÀÇ °ª ºñ±³ (p1,p2´Â °´Ã¼»ı¼ºÇØ¼­ ±× °ªÀº Å¬·¡½ºÀÇ ÁÖ¼Ò°¡ ÀúÀåµÇ¾îÀÖ´Ù)
-		System.out.println(p1.equals(p2)); // class »ó¼ÓÀ» ¾Æ¹«°Íµµ ¹ŞÁö ¾ÊÀ¸¸é Object¸¦ »ó¼Ó¹Ş´Âµ¥, ObjectÀÇ equals°¡ ==Ã³·³ ÀÛµ¿ÇÑ´Ù.
+		System.out.println(p1 == p2); // ==ì€ í•´ë‹¹ ë³€ìˆ˜ì˜ ê°’ ë¹„êµ (p1,p2ëŠ” ê°ì²´ìƒì„±í•´ì„œ ê·¸ ê°’ì€ í´ë˜ìŠ¤ì˜ ì£¼ì†Œê°€ ì €ì¥ë˜ì–´ìˆë‹¤)
+		System.out.println(p1.equals(p2)); // class ìƒì†ì„ ì•„ë¬´ê²ƒë„ ë°›ì§€ ì•Šìœ¼ë©´ Objectë¥¼ ìƒì†ë°›ëŠ”ë°, Objectì˜ equalsê°€ ==ì²˜ëŸ¼ ì‘ë™í•œë‹¤.
 		System.out.println("-------------------------------");
 		
 		Set<Person> testSet = new HashSet<>();
 		
 		testSet.add(p1);
 		testSet.add(p2);
-		System.out.println("SetÀÇ Å©±â : " + testSet.size());
+		System.out.println("Setì˜ í¬ê¸° : " + testSet.size());
 		
 		System.out.println("p1 : " + p1.hashCode());
 		System.out.println("p2 : " + p2.hashCode());
 		/*
-		 	- equals() 	 ==> µÎ °´Ã¼ÀÇ ³»¿ëÀÌ °°ÀºÁö °Ë»çÇÏ´Â ¿¬»êÀÚ
-		 	- hashCode() ==> µÎ °´Ã¼ÀÇ µ¿ÀÏ¼ºÀ» °Ë»çÇÏ´Â ¿¬»êÀÚ.
+		 	- equals() 	 ==> ë‘ ê°ì²´ì˜ ë‚´ìš©ì´ ê°™ì€ì§€ ê²€ì‚¬í•˜ëŠ” ì—°ì‚°ì
+		 	- hashCode() ==> ë‘ ê°ì²´ì˜ ë™ì¼ì„±ì„ ê²€ì‚¬í•˜ëŠ” ì—°ì‚°ì.
 		 	
-		 	- HashSet, Hashtable, HashMap°ú °°ÀÌ Hash·Î ½ÃÀÛÇÏ´Â ÄÃ·º¼ÇµéÀº °´Ã¼ÀÇ ÀÇ¹Ì»óÀÇ µ¿ÀÏ¼ºÀ» ºñ±³ÇÏ±â À§ÇØ HashCode() ¸Ş¼­µå¸¦ È£ÃâÇÏ¿© ºñ±³ÇÑ´Ù.
-		 		±×·¯¹Ç·Î, °´Ã¼°¡ °°ÀºÁö ¿©ºÎ¸¦ °áÁ¤ÇÏ·Á¸é hashCode() ¸Ş¼Òµå¸¦ ÀçÁ¤ÀÇ ÇØ¾ß ÇÑ´Ù.
+		 	- HashSet, Hashtable, HashMapê³¼ ê°™ì´ Hashë¡œ ì‹œì‘í•˜ëŠ” ì»¬ë ‰ì…˜ë“¤ì€ ê°ì²´ì˜ ì˜ë¯¸ìƒì˜ ë™ì¼ì„±ì„ ë¹„êµí•˜ê¸° ìœ„í•´ HashCode() ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬ ë¹„êµí•œë‹¤.
+		 		ê·¸ëŸ¬ë¯€ë¡œ, ê°ì²´ê°€ ê°™ì€ì§€ ì—¬ë¶€ë¥¼ ê²°ì •í•˜ë ¤ë©´ hashCode() ë©”ì†Œë“œë¥¼ ì¬ì •ì˜ í•´ì•¼ í•œë‹¤.
 		  
-		  	- HashCode() ¸Ş¼Òµå¿¡¼­ »ç¿ëÇÏ´Â 'ÇØ½Ì ¾Ë°í¸®Áò'Àº ¼­·Î ´Ù¸¥ °´Ã¼µé¿¡ ´ëÇØ¼­ °°Àº hashcode¸¦ ³ªÅ¸³¾ ¼öµµ ÀÖ´Ù.
+		  	- HashCode() ë©”ì†Œë“œì—ì„œ ì‚¬ìš©í•˜ëŠ” 'í•´ì‹± ì•Œê³ ë¦¬ì¦˜'ì€ ì„œë¡œ ë‹¤ë¥¸ ê°ì²´ë“¤ì— ëŒ€í•´ì„œ ê°™ì€ hashcodeë¥¼ ë‚˜íƒ€ë‚¼ ìˆ˜ë„ ìˆë‹¤.
 		 */
 	}
 
@@ -87,22 +87,22 @@ class Person{
 //	public boolean equals(Object obj) {
 //		if(obj == null) return false;
 //		
-//		// °°Àº À¯ÇüÀÇ Å¬·¡½ºÀÎÁö °Ë»ç.
+//		// ê°™ì€ ìœ í˜•ì˜ í´ë˜ìŠ¤ì¸ì§€ ê²€ì‚¬.
 //		if(this.getClass()!=obj.getClass()) return false;
 //		
-//		// ÂüÁ¶°ªÀÌ °°ÀºÁö ºñ±³
+//		// ì°¸ì¡°ê°’ì´ ê°™ì€ì§€ ë¹„êµ
 //		if(this==obj) return true;
 //		
-//		// ¸Å°³º¯¼ö°ªÀ» ÇöÀç °´Ã¤ À¯ÇüÀ¸·Î Çüº¯È¯
+//		// ë§¤ê°œë³€ìˆ˜ê°’ì„ í˜„ì¬ ê°ì±„ ìœ í˜•ìœ¼ë¡œ í˜•ë³€í™˜
 //		Person myPerson = (Person)obj;
 //		
 //		if(this.name == null && myPerson.getName()!=null){ return false;}
 //		
-//		//id°¡ °°°í nameÀÌ ¸ğµÎ nullÀÎ °æ¿ì
+//		//idê°€ ê°™ê³  nameì´ ëª¨ë‘ nullì¸ ê²½ìš°
 //		if(this.id==myPerson.getId() && this.name == myPerson.getName()){ return true;}
-//		//id°¡ °°°í nameµµ °°Àº°æ¿ì
+//		//idê°€ ê°™ê³  nameë„ ê°™ì€ê²½ìš°
 //		if(this.id==myPerson.getId() && this.name.equals(myPerson.getName())){ return true;}
-//		//´õÀÌ»ó trueÀÎ Á¶°ÇÀÌ ¾øÀ¸´Ï.
+//		//ë”ì´ìƒ trueì¸ ì¡°ê±´ì´ ì—†ìœ¼ë‹ˆ.
 //		return false;
 //	}
 //	
