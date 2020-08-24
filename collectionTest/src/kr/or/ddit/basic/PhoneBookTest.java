@@ -110,6 +110,7 @@ public class PhoneBookTest {
 		System.out.print("이름 >>");
 		String name = sc.nextLine();
 		
+		
 		if(!phoneBook.containsKey(name)){
 			System.out.println("\n'" + name +"'" + "은 등록되지 않은 사람입니다.");
 		} else {
