@@ -70,7 +70,9 @@ class InputThread extends Thread{
 	public static String str;
 	@Override
 	public void run() {
-		str = JOptionPane.showInputDialog("<가위, 바위, 보> 중에 입력하세요");
+		do{
+			str = JOptionPane.showInputDialog("<가위, 바위, 보> 중에 입력하세요");
+		}while(str==null || !str.equals("가위")&&!str.equals("보")&&!str.equals("바위"));
 		inputCheck = true;
 		
 	}
