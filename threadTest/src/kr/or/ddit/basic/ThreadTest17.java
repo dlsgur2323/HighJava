@@ -2,7 +2,7 @@ package kr.or.ddit.basic;
 
 /*
  *  은행의 입출금 작업을 쓰레드로 처리하는 예제
- *  
+ *  synchronized를 이용한 동기화 처리 예제
  */
 
 public class ThreadTest17 {
