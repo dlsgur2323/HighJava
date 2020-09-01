@@ -1,4 +1,7 @@
 package kr.or.ddit.basic;
+
+import java.util.Vector;
+
 /*
  * 	wait(), notify() 메소드를 이용하여 두 쓰레드가 번갈아 한번씩 실행되는 예제
  * 
@@ -33,6 +36,7 @@ class WorkObject{
 			wait();
 		} catch (InterruptedException e) {
 		}
+		
 		
 	}
 	

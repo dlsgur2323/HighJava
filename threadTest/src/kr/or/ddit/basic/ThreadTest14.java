@@ -59,14 +59,14 @@ class ThreadStopTest2 extends Thread {
 	@Override
 	public void run() {
 		// 방법1 ==> interrupt()메소드와 sleep() 메소드를 이용하는 방법
-		try {
-			while(true){
-				System.out.println("쓰레드 실행 중...");
-				Thread.sleep(1);
-			}
-		} catch (InterruptedException e) {
-			
-		}
+//		try {
+//			while(true){
+//				System.out.println("쓰레드 실행 중...");
+//				Thread.sleep(1);
+//			}
+//		} catch (InterruptedException e) {
+//			
+//		}
 		
 		// 방법 2
 		while(true){

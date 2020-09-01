@@ -19,7 +19,6 @@ public class FileTest03 {
 			System.out.println(dir.getName() + "은 디렉토리(폴더)가 아닙니다.");
 			return;
 		}
-		
 		System.out.println("[" + dir.getAbsolutePath() + "] 디렉토리 내용들...");
 		// 해당 디렉토리 안에 있는 모든 파일과 디렉토리 목록을 구한다.
 		File[] files = dir.listFiles();
