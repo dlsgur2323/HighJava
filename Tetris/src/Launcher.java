@@ -15,26 +15,19 @@ public class Launcher {
 	    f.setLayout( null );
 	    f.setVisible(true);
 	    map.showMap();
-	    Block b1 = new Block(4, map);
-	    b1.start();
-	    f.addKeyListener(keyb=new Key(b1));
-	    try {
-			b1.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    f.removeKeyListener(keyb);
-	    Block b2 = new Block(4, map);
-	    b2.start();
-	    f.addKeyListener(keyb=new Key(b2));
-	    try {
-	    	b2.join();
-	    } catch (InterruptedException e) {
-	    	// TODO Auto-generated catch block
-	    	e.printStackTrace();
+	    
+	    while(true){
+	    	Block b = new Block(4,map);
+	    	b.start();
+	    	f.addKeyListener(keyb=new Key(b));
+	    	try {
+	    		b.join();
+	    	} catch (InterruptedException e) {
+	    		// TODO Auto-generated catch block
+	    		e.printStackTrace();
+	    	}
+	    	f.removeKeyListener(keyb);
 	    }
-	    f.removeKeyListener(keyb);
 	}
 
 }
@@ -56,6 +49,12 @@ class Key implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == 37){
 			block.Move(37);
+		}
+		if(e.getKeyCode() == 39){
+			block.Move(39);
+		}
+		if(e.getKeyCode() == 40){
+			block.Move(40);
 		}
 	}
 	

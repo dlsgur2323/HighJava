@@ -35,37 +35,66 @@ public class Block extends Thread {
 	private final Lock lock = new ReentrantLock();
 
 	public void Move(int input) {
-		if (input == 37) {
+		if (input == 37) { // 왼쪽
 			if (!(map.m[shape[0][0]][shape[0][1] - 1] == 5 || shape[0][1] - 1 == 0)) {
 				shape[0][1]--;
 				shape[1][1]--;
 				shape[2][1]--;
 				shape[3][1]--;
+				map.m[shape[0][0]][shape[0][1] + 1] = 0;
+				map.m[shape[1][0]][shape[1][1] + 1] = 0;
+				map.m[shape[2][0]][shape[2][1] + 1] = 0;
+				map.m[shape[3][0]][shape[3][1] + 1] = 0;
+				map.m[shape[0][0]][shape[0][1]] = 1;
+				map.m[shape[1][0]][shape[1][1]] = 1;
+				map.m[shape[2][0]][shape[2][1]] = 1;
+				map.m[shape[3][0]][shape[3][1]] = 1;
+				map.showMap();
+			}
+		}
+		if(input == 39) {
+			if (!(map.m[shape[1][0]][shape[1][1] + 1] == 5 || shape[1][1] + 1 == map.m[shape[1][0]].length-1)) {
+				shape[0][1]++;
+				shape[1][1]++;
+				shape[2][1]++;
+				shape[3][1]++;
 				map.m[shape[0][0]][shape[0][1] - 1] = 0;
 				map.m[shape[1][0]][shape[1][1] - 1] = 0;
 				map.m[shape[2][0]][shape[2][1] - 1] = 0;
 				map.m[shape[3][0]][shape[3][1] - 1] = 0;
+				map.m[shape[0][0]][shape[0][1]] = 1;
+				map.m[shape[1][0]][shape[1][1]] = 1;
+				map.m[shape[2][0]][shape[2][1]] = 1;
+				map.m[shape[3][0]][shape[3][1]] = 1;
+				map.showMap();
+			}
+		}
+		if(input == 40){
+			if (shape[2][0] == map.m.length - 1 || shape[3][0] == map.m.length - 1
+					|| map.m[shape[2][0] + 1][shape[2][1]] == 5 || map.m[shape[3][0] + 1][shape[3][1]] == 5) {
+				map.m[shape[0][0]][shape[0][1]] = 5;
+				map.m[shape[1][0]][shape[1][1]] = 5;
+				map.m[shape[2][0]][shape[2][1]] = 5;
+				map.m[shape[3][0]][shape[3][1]] = 5;
+			} else {
+				shape[0][0]++;
+				shape[1][0]++;
+				shape[2][0]++;
+				shape[3][0]++;
+				map.m[shape[3][0] - 1][shape[3][1]] = 0;
+				map.m[shape[0][0] - 1][shape[0][1]] = 0;
+				map.m[shape[1][0] - 1][shape[1][1]] = 0;
+				map.m[shape[2][0] - 1][shape[2][1]] = 0;
+				map.m[shape[0][0]][shape[0][1]] = 1;
+				map.m[shape[1][0]][shape[1][1]] = 1;
+				map.m[shape[2][0]][shape[2][1]] = 1;
+				map.m[shape[3][0]][shape[3][1]] = 1;
 				map.showMap();
 			}
 		}
 	}
 
 	public void Falling() {
-		try {
-			map.m[shape[0][0]][shape[0][1]] = 1;
-			map.m[shape[1][0]][shape[1][1]] = 1;
-			map.m[shape[2][0]][shape[2][1]] = 1;
-			map.m[shape[3][0]][shape[3][1]] = 1;
-			map.showMap();
-			if (shape[2][0] == map.m.length - 1
-					|| map.m[shape[2][0] + 1][shape[2][1]] == 5) {
-				map.m[shape[0][0]][shape[0][1]] = 5;
-				map.m[shape[1][0]][shape[1][1]] = 5;
-				map.m[shape[2][0]][shape[2][1]] = 5;
-				map.m[shape[3][0]][shape[3][1]] = 5;
-				return;
-			}
-			Thread.sleep(500);
 			shape[0][0]++;
 			shape[1][0]++;
 			shape[2][0]++;
@@ -74,24 +103,40 @@ public class Block extends Thread {
 			map.m[shape[0][0] - 1][shape[0][1]] = 0;
 			map.m[shape[1][0] - 1][shape[1][1]] = 0;
 			map.m[shape[2][0] - 1][shape[2][1]] = 0;
-
-		} catch (InterruptedException e) {
-			// TODO: handle exception
-		}
+			for(int i=0; i < shape.length; i++){
+				map.m[shape[i][0]][shape[i][1]] = 1;
+			}
 	}
 
 	@Override
 	public void run() {
+		for(int i=0; i < shape.length; i++){
+			map.m[shape[i][0]][shape[i][1]] = 1;
+		}
+		map.showMap();
+		
 		while(true){
-			Falling();
-			if (shape[2][0] == map.m.length - 1
-					|| map.m[shape[2][0] + 1][shape[2][1]] == 5) {
-				map.m[shape[0][0]][shape[0][1]] = 5;
-				map.m[shape[1][0]][shape[1][1]] = 5;
-				map.m[shape[2][0]][shape[2][1]] = 5;
-				map.m[shape[3][0]][shape[3][1]] = 5;
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			if (shape[2][0] == map.m.length - 1 || shape[3][0] == map.m.length - 1
+					|| map.m[shape[2][0] + 1][shape[2][1]] == 5 || map.m[shape[3][0] + 1][shape[3][1]] == 5) {
+				try {
+					Thread.sleep(300);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				for(int i=0; i < shape.length; i++){
+					map.m[shape[i][0]][shape[i][1]] = 5;
+				}
 				return;
 			}
+			Falling();
+			map.showMap();
 		}
 	}
 

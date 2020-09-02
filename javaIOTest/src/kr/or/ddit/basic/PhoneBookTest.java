@@ -1,5 +1,7 @@
 package kr.or.ddit.basic;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.EOFException;
@@ -14,6 +16,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
+
+import javax.swing.JFrame;
 
 /*
  	문제 ) 이름, 주소, 나이, 전화번호를 멤버변수로 같는 Phone클래스를 만들고
@@ -65,14 +69,17 @@ import java.util.Set;
  			(바로 다시 메뉴가 나오도록)
  		
  */
-public class PhoneBookTest {
+public class PhoneBookTest{
 
 	HashMap<String, Phone> phoneBook = new HashMap<>();
 	Scanner sc = new Scanner(System.in);
+	boolean dataChange = false; // 데이터가 변경되었는지 여부를 나타내는 변수
+								// 데이터가 변경되면 true가 된다.
 	
 	public static void main(String[] args) {
+		PhoneBookTest phbt = new PhoneBookTest(); 		
 		
-		new PhoneBookTest().strat();
+		phbt.strat();
 
 	}
 	
@@ -80,51 +87,48 @@ public class PhoneBookTest {
 	private void strat() {
 		callPhoneData();
 		while(true){
-			System.out.println("\n===============");
-			System.out.println("다음 메뉴를 선택하세요.");
-			System.out.println("1. 전화번호 등록");
-			System.out.println("2. 전화번호 수정");
-			System.out.println("3. 전화번호 삭제");
-			System.out.println("4. 전화번호 검색");
-			System.out.println("5. 전화번호 전체 출력");
-			System.out.println("6. 전화번호 저장");
-			System.out.println("0. 프로그램 종료");
-			System.out.println("===============");
-			System.out.print("번호입력>>");
-			int input = Integer.parseInt(sc.nextLine());
-			switch(input){
-				case 0 : 
-					save();
-					System.out.println("\n프로그램을 종료합니다...");
-					System.exit(0);
-				case 1 :
-					insertPhone();
-					break;
-				case 2 :
-					updatePhone();
-					break;
-				case 3 :
-					deletePhone();
-					break;
-				case 4 :
-					searchPhone();
-					break;
-				case 5 :
-					listPhone();
-					break;
-				case 6: 
-					save();
-					break;
-					
-			}
+			mainmenu();			
 		}
-		
+	}
+	public void mainmenu(){
+		System.out.println("\n===============");
+		System.out.println("다음 메뉴를 선택하세요.");
+		System.out.println("1. 전화번호 등록");
+		System.out.println("2. 전화번호 수정");
+		System.out.println("3. 전화번호 삭제");
+		System.out.println("4. 전화번호 검색");
+		System.out.println("5. 전화번호 전체 출력");
+		System.out.println("6. 전화번호 저장");
+		System.out.println("0. 프로그램 종료");
+		System.out.println("===============");
+		System.out.print("번호입력 >>");
+		int input = Integer.parseInt(sc.nextLine());
+			if(input == 1){
+				insertPhone();
+			} else if(input == 2){
+				updatePhone();
+			} else if(input == 3){
+				deletePhone();
+			} else if(input == 4){
+				searchPhone();
+			} else if(input == 5){
+				listPhone();
+			} else if(input == 6){
+				save();
+			} else if(input == 0){
+				if(dataChange){ // 변경되었으면...
+					save();
+				}
+				System.out.println("\n프로그램을 종료합니다...");
+				System.exit(0);
+			}
 	}
 	
-	private void callPhoneData() {
+	public void callPhoneData() {
 		ObjectInputStream oin = null;
-		File f = new File("d:/d_other/phoneData.bin");
+		File f = new File("d:/d_other/phoneData.dat");
 		if(!f.exists()){
+			System.out.println("저장된 데이터가 없습니다.");
 			return;
 		} else {
 			try {
@@ -154,23 +158,25 @@ public class PhoneBookTest {
 	}
 
 
-	private void save() {
+	public void save() {
 		System.out.println("전화번호 저장 중...");
 		ObjectOutputStream oout = null;
 		Set<String> list2 = phoneBook.keySet();
 		try {
-			oout = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("d:/d_other/phoneData.bin")));
+			oout = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("d:/d_other/phoneData.dat")));
 			for(String key : list2){
 				oout.writeObject(phoneBook.get(key));
 			}
 			System.out.println("저장 완료!");
 			oout.close();
+			dataChange = false;
 		} catch (IOException e) {
 			// TODO: handle exception
 		}
+		
 	}
 
-	private void listPhone() {
+	public void listPhone() {
 		Set<String> list = phoneBook.keySet();
 		int num = 1;
 		System.out.println("================================================");
@@ -180,9 +186,10 @@ public class PhoneBookTest {
 			System.out.println(num +"\t"+ name + "\t"+phoneBook.get(name).ph+"\t"+phoneBook.get(name).age+"\t"+phoneBook.get(name).address);
 			num++;
 		}
+		System.out.println("================================================");
 	}
 
-	private void searchPhone() {
+	public void searchPhone() {
 		System.out.println("검색할 전화번호 정보를 입력하세요");
 		System.out.print("이름 >>");
 		String name = sc.nextLine();
@@ -191,16 +198,17 @@ public class PhoneBookTest {
 		if(!phoneBook.containsKey(name)){
 			System.out.println("\n'" + name +"'" + "은 등록되지 않은 사람입니다.");
 		} else {
-			System.out.println("===================");
+			System.out.println("================================================");
 			System.out.println("이름\t전화번호\t\t나이\t주소");
-			System.out.println("===================");
-			System.out.print(name + " " + phoneBook.get(name).ph + "\t" + phoneBook.get(name).age + " " + phoneBook.get(name).address);
+			System.out.println("================================================");
+			System.out.print(name + "\t" + phoneBook.get(name).ph + "\t" + phoneBook.get(name).age + "\t" + phoneBook.get(name).address);
 			System.out.println();
+			System.out.println("================================================");
 		}
 		
 	}
 
-	private void deletePhone() {
+	public void deletePhone() {
 		System.out.println("삭제할 전화번호 정보를 입력하세요");
 		System.out.print("이름 >>");
 		String name = sc.nextLine();
@@ -210,11 +218,12 @@ public class PhoneBookTest {
 		} else {
 			System.out.println("삭제완료!!");
 			phoneBook.remove(name);
+			dataChange = true;
 		}
 		
 	}
 
-	private void updatePhone() {
+	public void updatePhone() {
 		System.out.println("수정할 전화번호 정보를 입력하세요");
 		System.out.print("이름 >>");
 		String name = sc.nextLine();
@@ -230,12 +239,12 @@ public class PhoneBookTest {
 			String address = sc.nextLine();
 			phoneBook.put(name, new Phone(name, age, address, ph));
 			System.out.println("'" + name + "'" + " 전화번호 수정 완료 !!");
-			
+			dataChange = true;
 		}
 		
 	}
 
-	private void insertPhone() {
+	public void insertPhone() {
 		System.out.println("새롭게 등록할 전화번호 정보를 입력하세요");
 		System.out.print("이름 >>");
 		String name = sc.nextLine();
@@ -251,11 +260,13 @@ public class PhoneBookTest {
 			String address = sc.nextLine();
 			phoneBook.put(name, new Phone(name,age, address, ph));
 			System.out.println("'" + name + "'" + " 전화번호 등록 완료 !!");
-			
+			dataChange = true;
 		}
 		
 	}
 
+
+	
 }
 
 class Phone implements Serializable{
@@ -276,7 +287,6 @@ class Phone implements Serializable{
 		this.ph = ph;
 	}
 }
-
 
 
 
