@@ -21,7 +21,7 @@ public class TcpClient01 {
 		
 		// 서버의 IP주소와 Port번호를 지정하여 Socket 객체를 생성한다.
 		// Socket 객체가 생성이 완료되면 해당 서버에 요청 신호를 보낸다.
-		Socket socket = new Socket("192.168.43.40", 7777);
+		Socket socket = new Socket("localhost", 7777);
 		
 		// 이 부분은 서버와 연결이 완료되어야만 실행되는 곳
 		System.out.println("서버에 연결되었습니다...");

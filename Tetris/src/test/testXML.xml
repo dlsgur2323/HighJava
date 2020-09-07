@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<person>
+	<data>
+		<name>이승민</name>
+		<age>26</age>
+		<nickName>승민짱123</nickName>
+	</data>
+	<data>
+		<name>이바다</name>
+		<age>15</age>
+		<nickName>개바다</nickName>
+	</data>
+</person>
