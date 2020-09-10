@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Scanner;
 
+import kr.or.ddit.util.DBUtil;
+
 /*
  *  Lprod 테이블에 새로운 데이터 추가하기
  *  
@@ -36,11 +38,7 @@ public class JdbcTest05 {
 			String lprod_nm = scan.next();
 			
 			try {
-				Class.forName("oracle.jdbc.driver.OracleDriver");
-				String url = "jdbc:oracle:thin:@localhost:1521:xe";
-				String user = "dlsgur";
-				String password = "java";
-				conn = DriverManager.getConnection(url, user, password);
+				conn = DBUtil.getConnection();
 				
 				String sql = "INSERT INTO LPROD (LPROD_ID, LPROD_GU, LPROD_NM)"
 						+ " VALUES ( (SELECT MAX(LPROD_ID) FROM LPROD)+1, UPPER(?), ?)";
