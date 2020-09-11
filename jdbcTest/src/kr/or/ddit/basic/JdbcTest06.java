@@ -47,6 +47,7 @@ public class JdbcTest06 {
 			System.out.println("2. 자료 삭제");
 			System.out.println("3. 자료 수정");
 			System.out.println("4. 전체 자료 출력");
+			System.out.println("5. 자료 수정2");
 			System.out.println("0. 작업 끝");
 			System.out.println("------------");
 			System.out.print("원하는 작업 선택 >");
@@ -64,11 +65,97 @@ public class JdbcTest06 {
 			case 4 :
 				printData();
 				break;
+			case 5 :
+				updateData2();
+				break;
 			case 0 :
 				System.out.println("작업 종료...");
 				System.exit(0);
+			default :
+				System.out.println("잘못 입력했습니다.");
+				System.out.println("다시 입력하세요.");
 			}
 		}
+	}
+
+	private void updateData2() {
+		System.out.println("-- 자료 수정2 --");
+		String id = "";
+		conn = DBUtil.getConnection();
+		checker:
+		while(true){
+			System.out.print("수정할 id >");
+			id = sc.nextLine();
+			
+			try {
+				String sql = "SELECT COUNT(*) FROM MYMEMBER WHERE MEM_ID = UPPER(?)";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, id);
+				rs = ps.executeQuery();
+				
+				while(rs.next()){
+					if(rs.getInt(1) > 0){
+						break checker;
+					} else {
+						System.out.println("존재하지 않는 ID 입니다.");
+						return;
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		int num;
+		String updateFiled = null; // 수정 작업을 진행할 컬럼이 저장될 변수
+		String updateTitle = null; // 
+		do{
+			System.out.println("수정할 항목을 선택하세요.");
+			System.out.println("1. 회원 이름  2. 전화번호  3. 주소");
+			System.out.println("-----------------------------");
+			System.out.print("수정할 항목 >>");
+			num = Integer.parseInt(sc.nextLine());
+			switch(num){
+				case 1 :
+					updateFiled = "MEM_NAME";
+					updateTitle = "회원이름"; break;
+				case 2 :
+					updateFiled = "MEM_TEL";
+					updateTitle = "전화번호"; break;
+				case 3 :
+					updateFiled = "MEM_ADDR";
+					updateTitle = "주소"; break;
+				default :
+					System.out.println("잘못 선택했습니다.");
+					System.out.println("다시 선택하세요.");
+			}
+		}while(num <1 || num >3);
+		
+		// 수정할 데이터 입력 받기
+		System.out.println();
+		System.out.print("새로운" + updateTitle + " >>");
+		String updateData = sc.nextLine();
+		
+		try {
+			String sql = "UPDATE MYMEMBER SET " + updateFiled + " = ? WHERE MEM_ID = UPPER(?)";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, updateData);
+			ps.setString(2, id);
+			int cnt = ps.executeUpdate();
+			if(cnt>0){
+				System.out.println("Update 성공!!");
+			} else {
+				System.out.println("Update 실패~~");
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+		}finally {
+			if(rs != null) try {rs.close();} catch (Exception e2) {}
+			if(ps != null) try {ps.close();} catch (Exception e2) {}
+			if(conn != null) try {conn.close();} catch (Exception e2) {}
+		}
+		
+		
 	}
 
 	private void printData() {
