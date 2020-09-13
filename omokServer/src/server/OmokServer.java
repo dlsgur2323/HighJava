@@ -79,9 +79,9 @@ public class OmokServer extends UnicastRemoteObject implements ServerInf{
 	}
 
 	@Override
-	public void pMove(int[] xy, int i, int j) throws RemoteException {
+	public void pMove(int color, int i, int j) throws RemoteException {
 		for(ClientInf client : clientList){
-			client.pMove(xy, i, j);
+			client.pMove(color, i, j);
 		}
 		
 	}

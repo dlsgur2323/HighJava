@@ -31,7 +31,7 @@ public class OmokClient extends UnicastRemoteObject implements ClientInf{
 		try {
 			ClientInf client = new OmokClient();
 			
-			Registry reg = LocateRegistry.getRegistry("localhost", 1099);
+			Registry reg = LocateRegistry.getRegistry("192.168.10.107", 1099);
 			server = (ServerInf)reg.lookup("omok");
 			
 			server.setClient(client);
@@ -52,11 +52,13 @@ public class OmokClient extends UnicastRemoteObject implements ClientInf{
 	    f.setSize(100,100);     
 	    f.setLayout( null );
 	    f.setVisible(true);
-	    if(myTurn) {
-	    	key = new Key(wxy);
+	    
+	    if(myTurn){
+	    	key = new Key(wxy,1);
 	    } else {
-	    	key = new Key(bxy);
+	    	key = new Key(bxy,2);
 	    }
+	    
 		f.addKeyListener(key);
 		try {
 			Thread.sleep(2000);
@@ -68,12 +70,11 @@ public class OmokClient extends UnicastRemoteObject implements ClientInf{
 	}
 	
 	class Key implements KeyListener{
-		private int[] wxy;
-		private int[] bxy;
-		
-		public Key(int[] xy) {
-			this.wxy = wxy;
-			this.bxy = bxy;
+		private int[] xy;
+		private int color;
+		public Key(int[] xy, int color) {
+			this.xy = xy;
+			this.color = color;
 		}
 		public void keyTyped(KeyEvent e) {
 			// TODO Auto-generated method stub
@@ -83,65 +84,29 @@ public class OmokClient extends UnicastRemoteObject implements ClientInf{
 			try {
 				if(turn == myTurn) {
 					if(e.getKeyCode() == 37){ // 좌
-						if(myTurn){
-							if(wxy[0] > 0){
-								server.pMove(wxy, 0, -1);
-							}
-						} else {
-							if(bxy[0] > 0){
-								server.pMove(bxy, 0, -1);
-							}
+						if(xy[0] > 0){
+							server.pMove(color, 0, -1);
 						}
 					} else if(e.getKeyCode() == 39){ // 우
-						if(myTurn){
-							if(wxy[0] < 14){
-								server.pMove(wxy, 0, 1);
-							}
-						} else {
-							if(bxy[0] < 14){
-								server.pMove(bxy, 0, 1);
-							}
+						if(xy[0] < 14){
+							server.pMove(color, 0, 1);
 						}
 					} else if(e.getKeyCode() == 40){ // 하
-						if(myTurn){
-							if(wxy[1] < 14){
-								server.pMove(wxy, 1, 1);
-							}
-						}else {
-							if(bxy[1] < 14){
-								server.pMove(bxy, 1, 1);
-							}
+						if(xy[1] < 14){
+							server.pMove(color, 1, 1);
 						}
 					} else if(e.getKeyCode() == 38){ // 상
-						if(myTurn){
-							if(wxy[1] > 0){
-								server.pMove(wxy, 1, -1);
-							}
-						}else {
-							if(bxy[1] > 0){
-								server.pMove(bxy, 1, -1);
-							}
+						if(xy[1] > 0){
+							server.pMove(color, 1, -1);
 						}
 					} else if(e.getKeyCode() == 10){ // 엔터
 						if(turn == myTurn){
-							if(myTurn){
-								if(map[wxy[1]][wxy[0]] == 0){
-									server.pSelect(wxy, 1);
-									turn = false;
-									checkWin(wxy, 1, 0, 1);// 좌우
-									checkWin(wxy, 0, 1, 1);// 상하
-									checkWin(wxy, 1, -1, 1);// /대각선
-									checkWin(wxy, 1, 1, 1);// \대각선
-								}
-							} else {
-								if(map[bxy[1]][bxy[0]] == 0){
-									server.pSelect(bxy, 2);
-									turn = true;
-									checkWin(bxy, 1, 0, 2);// 좌우
-									checkWin(bxy, 0, 1, 2);// 상하
-									checkWin(bxy, 1, -1, 2);// /대각선
-									checkWin(bxy, 1, 1, 2);// \대각선
-								}
+							if(map[xy[1]][xy[0]] == 0){
+								server.pSelect(xy, color);
+								checkWin(xy, 1, 0, 1);// 좌우
+								checkWin(xy, 0, 1, 1);// 상하
+								checkWin(xy, 1, -1, 1);// /대각선
+								checkWin(xy, 1, 1, 1);// \대각선
 							}
 						}
 					}
@@ -231,18 +196,12 @@ public class OmokClient extends UnicastRemoteObject implements ClientInf{
 						System.out.print(" ● ");
 					}
 				} else if (map[i][j] == 0) {
-					if(turn){
-						if(i==wxy[1] && j==wxy[0]){
-							System.out.print("> <");
-						} else {
-							System.out.print("   ");
-						}
+					if(i==wxy[1] && j==wxy[0]){
+						System.out.print("> <");
+					} else if (i==bxy[1] && j==bxy[0]){
+						System.out.print("> <");
 					} else {
-						if (i==bxy[1] && j==bxy[0]){
-							System.out.print("> <");
-						} else {
-							System.out.print("   ");
-						}
+						System.out.print("   ");
 					}
 				}
 				if(j==14){
@@ -266,13 +225,18 @@ public class OmokClient extends UnicastRemoteObject implements ClientInf{
 	}
 
 	@Override
-	public void pMove(int[] xy, int i, int j) throws RemoteException {
-		xy[i] += j;
+	public void pMove(int color, int i, int j) throws RemoteException {
+		if(color ==1 ){
+			wxy[i] += j;
+		} else {
+			bxy[i] += j;
+		}
 		printMap();
 	}
 
 	public void pSelect(int[] xy, int color) throws RemoteException {
 		map[xy[1]][xy[0]] = color;
+		turn = !turn;
 		printMap();
 	}
 	
