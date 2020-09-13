@@ -42,15 +42,6 @@ public class OmokServer extends UnicastRemoteObject implements ServerInf{
 	}
 	
 	
-	
-	@Override
-	public void doDisplay() throws RemoteException {
-		for(ClientInf client : clientList){
-			client.printMap();
-		}
-		
-	}
-
 	@Override
 	public void setClient(ClientInf client) throws RemoteException {
 		clientList.add(client);
@@ -58,6 +49,7 @@ public class OmokServer extends UnicastRemoteObject implements ServerInf{
 		if(clientList.size() == 2){
 			start();
 		}
+		
 		
 	}
 
@@ -69,9 +61,15 @@ public class OmokServer extends UnicastRemoteObject implements ServerInf{
 		
 		clientList.get(0).setMyTurn(setTurn.get(0));
 		clientList.get(1).setMyTurn(setTurn.get(1));
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("게임을 시작합니다.");
 		clientList.get(0).start();
 		clientList.get(1).start();
-		doDisplay();
 	}
 
 	@Override
@@ -86,6 +84,12 @@ public class OmokServer extends UnicastRemoteObject implements ServerInf{
 			client.pMove(xy, i, j);
 		}
 		
+	}
+	
+	public void pSelect(int[] xy, int color) throws RemoteException {
+		for(ClientInf client : clientList){
+			client.pSelect(xy, color);
+		}
 	}
 
 }

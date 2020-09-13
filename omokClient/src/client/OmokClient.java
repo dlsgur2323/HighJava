@@ -31,7 +31,7 @@ public class OmokClient extends UnicastRemoteObject implements ClientInf{
 		try {
 			ClientInf client = new OmokClient();
 			
-			Registry reg = LocateRegistry.getRegistry("192.168.43.40", 1099);
+			Registry reg = LocateRegistry.getRegistry("localhost", 1099);
 			server = (ServerInf)reg.lookup("omok");
 			
 			server.setClient(client);
@@ -58,7 +58,13 @@ public class OmokClient extends UnicastRemoteObject implements ClientInf{
 	    	key = new Key(bxy);
 	    }
 		f.addKeyListener(key);
-		
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		printMap();
 	}
 	
 	class Key implements KeyListener{
@@ -79,71 +85,63 @@ public class OmokClient extends UnicastRemoteObject implements ClientInf{
 					if(e.getKeyCode() == 37){ // 좌
 						if(myTurn){
 							if(wxy[0] > 0){
-								wxy[0]--;
 								server.pMove(wxy, 0, -1);
 							}
 						} else {
 							if(bxy[0] > 0){
-								bxy[0]--;
 								server.pMove(bxy, 0, -1);
 							}
 						}
 					} else if(e.getKeyCode() == 39){ // 우
 						if(myTurn){
 							if(wxy[0] < 14){
-								wxy[0]++;
 								server.pMove(wxy, 0, 1);
 							}
 						} else {
 							if(bxy[0] < 14){
-								bxy[0]++;
 								server.pMove(bxy, 0, 1);
 							}
 						}
 					} else if(e.getKeyCode() == 40){ // 하
 						if(myTurn){
 							if(wxy[1] < 14){
-								wxy[1]++;
 								server.pMove(wxy, 1, 1);
 							}
 						}else {
 							if(bxy[1] < 14){
-								bxy[1]++;
 								server.pMove(bxy, 1, 1);
 							}
 						}
 					} else if(e.getKeyCode() == 38){ // 상
 						if(myTurn){
 							if(wxy[1] > 0){
-								wxy[1]--;
 								server.pMove(wxy, 1, -1);
 							}
 						}else {
 							if(bxy[1] > 0){
-								bxy[1]--;
 								server.pMove(bxy, 1, -1);
 							}
 						}
 					} else if(e.getKeyCode() == 10){ // 엔터
-						if(myTurn){
-							if(map[wxy[1]][wxy[0]] == 0){
-								map[wxy[1]][wxy[0]] = 1;
-								printMap();
-								turn = false;
-								checkWin(wxy, 1, 0, 1);// 좌우
-								checkWin(wxy, 0, 1, 1);// 상하
-								checkWin(wxy, 1, -1, 1);// /대각선
-								checkWin(wxy, 1, 1, 1);// \대각선
-							}
-						}else {
-							if(map[bxy[1]][bxy[0]] == 0){
-								map[bxy[1]][bxy[0]] = 2;
-								printMap();
-								turn = true;
-								checkWin(bxy, 1, 0, 2);// 좌우
-								checkWin(bxy, 0, 1, 2);// 상하
-								checkWin(bxy, 1, -1, 2);// /대각선
-								checkWin(bxy, 1, 1, 2);// \대각선
+						if(turn == myTurn){
+							if(myTurn){
+								if(map[wxy[1]][wxy[0]] == 0){
+									server.pSelect(wxy, 1);
+									turn = false;
+									checkWin(wxy, 1, 0, 1);// 좌우
+									checkWin(wxy, 0, 1, 1);// 상하
+									checkWin(wxy, 1, -1, 1);// /대각선
+									checkWin(wxy, 1, 1, 1);// \대각선
+								}
+							} else {
+								if(map[bxy[1]][bxy[0]] == 0){
+									server.pSelect(bxy, 2);
+									turn = true;
+									checkWin(bxy, 1, 0, 2);// 좌우
+									checkWin(bxy, 0, 1, 2);// 상하
+									checkWin(bxy, 1, -1, 2);// /대각선
+									checkWin(bxy, 1, 1, 2);// \대각선
+								}
 							}
 						}
 					}
@@ -260,7 +258,11 @@ public class OmokClient extends UnicastRemoteObject implements ClientInf{
 	@Override
 	public void setMyTurn(boolean torf) throws RemoteException {
 		myTurn = torf;
-		
+		if(torf){
+			System.out.println("당신은 백돌입니다.");
+		} else {
+			System.out.println("당신은 흑돌입니다.");
+		}
 	}
 
 	@Override
@@ -269,6 +271,9 @@ public class OmokClient extends UnicastRemoteObject implements ClientInf{
 		printMap();
 	}
 
-	
+	public void pSelect(int[] xy, int color) throws RemoteException {
+		map[xy[1]][xy[0]] = color;
+		printMap();
+	}
 	
 }

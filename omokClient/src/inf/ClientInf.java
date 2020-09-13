@@ -14,4 +14,6 @@ public interface ClientInf extends Remote{
 	public void setMyTurn(boolean torf)	throws RemoteException;
 
 	public void pMove(int[] xy, int i, int j) throws RemoteException; 
+	
+	public void pSelect(int[] xy, int color) throws RemoteException;
 }
