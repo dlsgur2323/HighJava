@@ -11,5 +11,6 @@ public interface ServerInf extends Remote{
 	
 	public void ready() throws RemoteException;
 	
-	public void nowTurn() throws RemoteException;
+	public void pMove(int[] xy, int i, int j) throws RemoteException;
+	
 }

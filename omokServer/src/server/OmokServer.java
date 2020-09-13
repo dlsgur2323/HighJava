@@ -40,11 +40,13 @@ public class OmokServer extends UnicastRemoteObject implements ServerInf{
 		}
 
 	}
-
+	
+	
+	
 	@Override
 	public void doDisplay() throws RemoteException {
 		for(ClientInf client : clientList){
-			client.printMap(omokpan);
+			client.printMap();
 		}
 		
 	}
@@ -59,17 +61,16 @@ public class OmokServer extends UnicastRemoteObject implements ServerInf{
 		
 	}
 
-	List<Boolean> setTurn = new ArrayList<>(); 
 	private void start() throws RemoteException{
+		List<Boolean> setTurn = new ArrayList<>(); 
 		setTurn.add(true);
 		setTurn.add(false);
 		Collections.shuffle(setTurn);
 		
 		clientList.get(0).setMyTurn(setTurn.get(0));
 		clientList.get(1).setMyTurn(setTurn.get(1));
-		nowTurn = true;
-		clientList.get(0).setNowTurn(true);
-		clientList.get(1).setNowTurn(true);
+		clientList.get(0).start();
+		clientList.get(1).start();
 		doDisplay();
 	}
 
@@ -80,10 +81,10 @@ public class OmokServer extends UnicastRemoteObject implements ServerInf{
 	}
 
 	@Override
-	public void nowTurn() throws RemoteException {
-		nowTurn = !nowTurn;
-		clientList.get(0).setNowTurn(nowTurn);
-		clientList.get(1).setNowTurn(nowTurn);
+	public void pMove(int[] xy, int i, int j) throws RemoteException {
+		for(ClientInf client : clientList){
+			client.pMove(xy, i, j);
+		}
 		
 	}
 

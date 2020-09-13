@@ -7,10 +7,11 @@ import vo.OmokVO;
 
 public interface ClientInf extends Remote{
 	
-	public void printMap(OmokVO omokpan) throws RemoteException;
+	public void start() throws RemoteException;
+	
+	public void printMap() throws RemoteException;
 	
 	public void setMyTurn(boolean torf)	throws RemoteException;
 
-	public void setNowTurn(boolean torf) throws RemoteException;
-	
+	public void pMove(int[] xy, int i, int j) throws RemoteException; 
 }
