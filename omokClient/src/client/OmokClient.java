@@ -31,7 +31,7 @@ public class OmokClient extends UnicastRemoteObject implements ClientInf{
 		try {
 			ClientInf client = new OmokClient();
 			
-			Registry reg = LocateRegistry.getRegistry("192.168.10.107", 1099);
+			Registry reg = LocateRegistry.getRegistry("192.168.43.40", 1099);
 			server = (ServerInf)reg.lookup("omok");
 			
 			server.setClient(client);
@@ -40,7 +40,7 @@ public class OmokClient extends UnicastRemoteObject implements ClientInf{
 			
 			
 		} catch (RemoteException e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		} catch (NotBoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -103,10 +103,10 @@ public class OmokClient extends UnicastRemoteObject implements ClientInf{
 						if(turn == myTurn){
 							if(map[xy[1]][xy[0]] == 0){
 								server.pSelect(xy, color);
-								checkWin(xy, 1, 0, 1);// 좌우
-								checkWin(xy, 0, 1, 1);// 상하
-								checkWin(xy, 1, -1, 1);// /대각선
-								checkWin(xy, 1, 1, 1);// \대각선
+//								checkWin(xy, 1, 0, color);// 좌우
+//								checkWin(xy, 0, 1, color);// 상하
+//								checkWin(xy, 1, -1, color);// /대각선
+//								checkWin(xy, 1, 1, color);// \대각선
 							}
 						}
 					}
@@ -238,6 +238,10 @@ public class OmokClient extends UnicastRemoteObject implements ClientInf{
 		map[xy[1]][xy[0]] = color;
 		turn = !turn;
 		printMap();
+		checkWin(xy, 1, 0, color);// 좌우
+		checkWin(xy, 0, 1, color);// 상하
+		checkWin(xy, 1, -1, color);// /대각선
+		checkWin(xy, 1, 1, color);// \대각선
 	}
 	
 }

@@ -36,7 +36,7 @@ public class OmokServer extends UnicastRemoteObject implements ServerInf{
 			
 			
 		} catch (RemoteException e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 
 	}
