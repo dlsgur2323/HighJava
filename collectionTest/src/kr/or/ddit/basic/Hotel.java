@@ -1,5 +1,15 @@
 package kr.or.ddit.basic;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,16 +27,9 @@ public class Hotel {
 	HashMap<Integer, Room> roomMap = new HashMap<>();
 	
 	private void start() {
+		callData();
 		
-		for(int j = 1; j <= 9; j++){
-			roomMap.put((200)+j, new Room((200)+j, "싱글룸"));
-		}
-		for(int j = 1; j <= 9; j++){
-			roomMap.put((300)+j, new Room((300)+j, "더블룸"));
-		}
-		for(int j = 1; j <= 9; j++){
-			roomMap.put((400)+j, new Room((400)+j, "스위트룸"));
-		}
+		
 		
 		System.out.println("*********************************************");
 		System.out.println("호텔문을 열었습니다. 어서오십시요.");
@@ -34,12 +37,15 @@ public class Hotel {
 		while(true){
 		    System.out.println("\n\n-----------------------------------------------------------");
 		    System.out.println("어떤 업무를 하시겠습니까?");
-		    System.out.println("1. 체크인    2. 체크아웃    3. 객실상태    4. 업무종료");
+		    System.out.println("1. 체크인    2. 체크아웃    3. 객실상태    4.저장 0. 업무종료");
 		    System.out.println("-----------------------------------------------------------");
 		    System.out.print("선택>>");
 		    int input = Integer.parseInt(sc.nextLine());
 		    switch(input){
-		    	case 4 :
+		    	case 0 :
+		    		if(dataChange){
+		    			save();
+		    		}
 		    		System.out.println("\n\n*********************************************");
 		    		System.out.println("호텔문을 닫았습니다.");
 		    		System.out.println("*********************************************");
@@ -47,7 +53,69 @@ public class Hotel {
 		    	case 1 : checkIn(); break;
 		    	case 2 : checkOut(); break;
 		    	case 3 : roomStatus(); break;
+		    	case 4 : save(); break;
 		    }
+		}
+		
+	}
+	private void callData() {
+		ObjectInputStream oin = null;
+		File f = new File("d:/d_other/hotelData.dat");
+		if(!f.exists()){
+			System.out.println("저장된 데이터가 없습니다.");
+			for(int j = 1; j <= 9; j++){
+				roomMap.put((200)+j, new Room((200)+j, "싱글룸"));
+			}
+			for(int j = 1; j <= 9; j++){
+				roomMap.put((300)+j, new Room((300)+j, "더블룸"));
+			}
+			for(int j = 1; j <= 9; j++){
+				roomMap.put((400)+j, new Room((400)+j, "스위트룸"));
+			}
+			return;
+		} else {
+			try {
+				
+				oin = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)));
+				
+				Object obj;
+				
+				while((obj=oin.readObject()) != null){
+					Room ph = (Room)obj;
+					roomMap.put(ph.roomNo, ph); 
+				}
+				
+			} catch (EOFException e){
+				System.out.println("저장된 데이터를 가져옵니다.");
+			} catch (IOException e) {
+				// TODO: handle exception
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try { oin.close(); } catch (IOException e) {
+					e.printStackTrace();
+			}
+			}
+		}
+		
+	}
+
+	boolean dataChange = false;
+	private void save() {
+		System.out.println("객실상태 저장 중...");
+		ObjectOutputStream oout = null;
+		Set<Integer> list2 = roomMap.keySet();
+		try {
+			oout = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("d:/d_other/hotelData.dat")));
+			for(int key : list2){
+				oout.writeObject(roomMap.get(key));
+			}
+			System.out.println("저장 완료!");
+			oout.close();
+			dataChange = false;
+		} catch (IOException e) {
+			// TODO: handle exception
 		}
 		
 	}
@@ -66,6 +134,7 @@ public class Hotel {
 			} else {
 				System.out.println(input +"호 객실의 " + roomMap.get(input).name + "님 체크아웃을 완료하였습니다.");
 				roomMap.get(input).name = null;
+				dataChange = true;
 			}
 		}
 		
@@ -91,6 +160,7 @@ public class Hotel {
 				String name = sc.nextLine();
 				roomMap.get(input).name = name;
 				System.out.println("체크인이 완료되었습니다.");
+				dataChange = true;
 			}
 		}
 		
@@ -118,8 +188,17 @@ public class Hotel {
 
 }
 
-class Room{
+class Room implements Serializable{
 	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 825770409685898928L;
+	
+	int roomNo;
+	String kinds;
+	String name;
 	
 	public Room(int roomNo, String kinds) {
 		super();
@@ -128,9 +207,6 @@ class Room{
 	}
 
 
-	int roomNo;
-	String kinds;
-	String name;
 }
 
 

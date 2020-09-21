@@ -144,6 +144,10 @@ public class MemberController {
 		} else {
 			AES256Util aes256 = new AES256Util();
 			for(MemberVO mem : memList){
+				
+				
+				
+				
 				String memid = aes256.decrypt(mem.getMem_id());
 				System.out.println(memid + "\t" + mem.getMem_name() + "\t" + mem.getMem_tel() + "\t" + mem.getMem_addr());
 			}
